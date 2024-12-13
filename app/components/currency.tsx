@@ -35,6 +35,8 @@ export default function Currency({
           type="text"
           className="bg-transparent text-2xl font-semibold outline-none border-none w-12 flex-1"
           defaultValue={Number(value).toLocaleString()}
+          autoComplete="off"
+          inputMode="numeric"
           onChange={(e) => {
             setCurrentTarget(name);
             onChange(e);
