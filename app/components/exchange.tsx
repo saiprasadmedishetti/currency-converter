@@ -1,15 +1,15 @@
 "use client";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getExchangeRates, Payload } from "../actions/currency";
 import Currency from "./currency";
 
 const initialValues = {
   from: {
-    currency: "INR",
-    value: 100,
+    currency: "USD",
+    value: 1,
   },
   to: {
-    currency: "USD",
+    currency: "INR",
     value: 0,
   },
 };
@@ -17,18 +17,20 @@ const initialValues = {
 export default function Exchange() {
   const [rates, setRates] = useState(initialValues);
   const [isLoading, setIsLoading] = useState(true);
+  const [options, setOptions] = useState<Record<string, number>>({});
 
   const handleExchangeRates = (payload: Payload) => {
     setIsLoading(true);
     getExchangeRates(payload).then((data) => {
+      setOptions(data.rates);
       setRates((prev) => ({
         from: {
           ...prev.from,
-          value: data.rates[prev.from.currency],
+          value: data.rates[prev.from.currency] || 0,
         },
         to: {
           ...prev.to,
-          value: data.rates[prev.to.currency],
+          value: data.rates[prev.to.currency] || 0,
         },
       }));
       setIsLoading(false);
@@ -39,27 +41,48 @@ export default function Exchange() {
     handleExchangeRates({});
   }, []);
 
-  let timerId: NodeJS.Timeout;
-  const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const payload = { base: e.target.name, amount: e.target.value };
-    if (timerId) {
-      clearTimeout(timerId);
-    }
-    timerId = setTimeout(() => {
-      handleExchangeRates(payload);
-    }, 200);
+  const onCurrencyChange = (type: string, currency: string, value: number) => {
+    setRates((prev) => ({
+      ...prev,
+      [type]: {
+        currency,
+        value,
+      },
+    }));
+
+    handleExchangeRates({ base: currency, amount: value + "" });
+  };
+
+  const onSwap = () => {
+    if (isLoading) return;
+
+    setRates((prevState) => ({
+      from: {
+        ...prevState.from,
+        currency: prevState.to.currency,
+      },
+      to: {
+        ...prevState.to,
+        currency: prevState.from.currency,
+        value: prevState.from.value / prevState.to.value,
+      },
+    }));
   };
 
   return (
-    <div className="relative flex flex-col md:flex-row min-w-[300px] w-full md:w-[600px] gap-5">
+    <div className="relative flex flex-col md:flex-row min-w-[320px] w-full md:w-[800px] gap-5">
       <Currency
         name="from"
         currency={rates.from.currency}
         value={rates.from.value}
-        onChange={handleValueChange}
         isLoading={isLoading}
+        options={options}
+        onCurrencyChange={onCurrencyChange}
       />
-      <button className="bg-zinc-900 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center border border-zinc-600 h-12 w-12 rounded-full text-sm font-medium  text-white">
+      <button
+        onClick={onSwap}
+        className="bg-zinc-900 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center border border-zinc-600 h-12 w-12 rounded-full text-sm font-medium  text-white"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -78,8 +101,9 @@ export default function Exchange() {
         name="to"
         currency={rates.to.currency}
         value={rates.to.value}
-        onChange={handleValueChange}
         isLoading={isLoading}
+        options={options}
+        onCurrencyChange={onCurrencyChange}
       />
     </div>
   );
