@@ -12,7 +12,6 @@ export const getExchangeRates = async ({
   amount = "1",
 }: Payload) => {
   const resp = await fetch(`${API_URL}?base=${base}&amount=${amount}`);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const data = await resp.json();
   return {
     rates: { ...data.rates, [base]: +amount },
