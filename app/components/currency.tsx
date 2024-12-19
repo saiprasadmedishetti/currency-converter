@@ -49,7 +49,7 @@ export default function Currency({
   };
 
   return (
-    <div className="flex flex-col bg-zinc-900 border border-zinc-600 pl-8 pr-6 py-6 rounded-xl flex-1">
+    <div className="flex flex-col backdrop-blur-[5px] border border-zinc-600 pl-8 pr-6 py-6 rounded-xl flex-1">
       <div className="text-slate-300 mb-2">
         {name === "from" ? "You send" : "Recipient gets"}
       </div>
@@ -87,7 +87,7 @@ export default function Currency({
               <ChevronDown />
             </span>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-zinc-900 h-64 overflow-y-auto text-white border border-zinc-600">
+          <DropdownMenuContent className="backdrop-blur-md bg-transparent h-64 overflow-y-auto text-white border border-zinc-600">
             {options &&
               Object.keys(options).map((option) => {
                 if (option === currency) return;

@@ -81,7 +81,7 @@ export default function Exchange() {
       />
       <button
         onClick={onSwap}
-        className="bg-zinc-900 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center border border-zinc-600 h-12 w-12 rounded-full text-sm font-medium  text-white"
+        className="bg-zinc-900 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 flex items-center justify-center border border-zinc-600 h-12 w-12 rounded-full text-sm font-medium  text-white"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
