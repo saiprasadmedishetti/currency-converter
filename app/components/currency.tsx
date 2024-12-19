@@ -55,7 +55,7 @@ export default function Currency({
       </div>
       <div className="flex items-center justify-between">
         {currentTarget !== name && isLoading ? (
-          <span className="line h-8 w-full mr-2" />
+          <span className="line h-9 w-full mr-2 py-1" />
         ) : (
           <input
             key={value}

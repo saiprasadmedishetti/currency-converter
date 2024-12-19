@@ -6,7 +6,7 @@ export default async function Home() {
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start px-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="fixed inset-0 h-full w-full opacity-25"
+          className="fixed inset-0 h-full w-full opacity-20  -z-10"
         >
           <defs>
             <pattern
@@ -33,6 +33,9 @@ export default async function Home() {
           </defs>
           <rect width="800%" height="800%" fill="url(#a)" />
         </svg>
+        <h1 className="text-white text-2xl text-center mx-auto font-bold -z-10">
+          Currency <span className="text-blue-400">Converter</span>
+        </h1>
         <Exchange />
       </main>
     </div>
