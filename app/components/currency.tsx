@@ -103,7 +103,7 @@ export default function Currency({
                         src={getImage(option)}
                       />
                       <AvatarFallback className="text-gray-600">
-                        {currency.slice(0, 2)}
+                        {option.slice(0, 2)}
                       </AvatarFallback>
                     </Avatar>
                     {option}
