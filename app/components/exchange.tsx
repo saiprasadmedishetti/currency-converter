@@ -64,7 +64,8 @@ export default function Exchange() {
       to: {
         ...prevState.to,
         currency: prevState.from.currency,
-        value: prevState.from.value / prevState.to.value,
+        value:
+          (prevState.from.value * prevState.from.value) / prevState.to.value,
       },
     }));
   };
