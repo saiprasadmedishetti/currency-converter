@@ -17,7 +17,7 @@ const initialValues = {
 export default function Exchange() {
   const [rates, setRates] = useState(initialValues);
   const [isLoading, setIsLoading] = useState(true);
-  const [options, setOptions] = useState<Record<string, number>>({});
+  const [options, setOptions] = useState<Record<string, number> | null>(null);
 
   const handleExchangeRates = (payload: Payload) => {
     setIsLoading(true);
@@ -50,7 +50,7 @@ export default function Exchange() {
       },
     }));
 
-    handleExchangeRates({ base: currency, amount: value + "" });
+    // handleExchangeRates({ base: currency, amount: value + "" });
   };
 
   const onSwap = () => {
